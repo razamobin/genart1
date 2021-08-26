@@ -20,7 +20,7 @@ const sketch = () => {
 
   const createGrid = () => {
     const points = [];
-    const count = 50;
+    const count = 80;
     for (let x = 0; x < count; x++) {
         for (let y = 0; y < count; y++) {
             const u = count <= 1? 0.5 : x / (count - 1);
@@ -78,13 +78,15 @@ const sketch = () => {
         */
 
         context.save();
-        context.fillStyle = color + '99';
+        context.fillStyle = color + 'aa';
         context.translate(x,y);
         fsize = Math.round(radius*width*1.2);
         context.font = `${fsize}px "serif"`;
-        context.rotate(Math.PI*2/4 + rotation);
-        context.fillText("`", 0, 0);
-        //context.fillText("'", 0, 0);
+        context.rotate(Math.PI*1/4 + rotation);
+        //context.fillText("`", 0, 0);
+        //context.fillText(".", 0, 0);
+        //context.fillText("!", 0, 0);
+        context.fillText("'", 0, 0);
         //context.beginPath();
         //context.rect(100,100,0,0);
         //context.fillStyle = 'black';
