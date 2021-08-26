@@ -3,9 +3,14 @@ const { lerp } = require('canvas-sketch-util/math');
 const random = require('canvas-sketch-util/random');
 const palettes = require('nice-color-palettes');
 
+random.setSeed(random.getRandomSeed());
+
 const settings = {
+  suffix: random.getSeed(),
   dimensions: [ 2048, 2048 ]
 };
+
+console.log(random.getSeed());
 
 const sketch = () => {
 
@@ -23,7 +28,8 @@ const sketch = () => {
 
             // better to use u and v for this, because they are between 0 and 1
             const freq = 10;
-            const radius = Math.abs(random.noise2D(freq*u, freq*v))*.1;
+            //const radius = Math.abs(random.noise2D(freq*u, freq*v))*.1;
+            const radius = Math.abs(random.noise2D(50*u, 50*v))*.2;
 
             points.push({
                 color: random.pick(palette),
@@ -38,7 +44,7 @@ const sketch = () => {
   };
 
   //random.setSeed(1);
-  const points = createGrid().filter(() => random.value() > .7);
+  const points = createGrid().filter(() => random.value() > .5);
   const margin = 400;
 
   return ({ context, width, height }) => {
@@ -55,8 +61,11 @@ const sketch = () => {
 
         const [u,v] = position;
 
-        const x = lerp(margin, width - margin, u);//u*width;
-        const y = lerp(margin, height - margin, v);//u*width;
+        //const x = lerp(margin, width - margin*4, u)-margin/20;//u*width;
+        //const y = lerp(margin, height - margin*4, v)+margin*2;//u*width;
+        const x = lerp(margin, width - margin, u) - margin/8;//u*width;
+        const y = lerp(margin, height - margin, v) + margin/8;//u*width;
+
 
 /*
         context.beginPath();
@@ -69,16 +78,17 @@ const sketch = () => {
         */
 
         context.save();
-        context.fillStyle = color;
-        //context.font = '${radius*width*100}px "serif"';
+        context.fillStyle = color + '99';
+        context.translate(x,y);
         fsize = Math.round(radius*width*1.2);
         context.font = `${fsize}px "serif"`;
-        context.translate(x,y);
-        context.rotate(Math.PI*.5 + rotation);
+        context.rotate(Math.PI*2/4 + rotation);
         context.fillText("`", 0, 0);
-        context.rect(10,10,0,0);
-        context.fill();
-
+        //context.fillText("'", 0, 0);
+        //context.beginPath();
+        //context.rect(100,100,0,0);
+        //context.fillStyle = 'black';
+        //context.fill();
 
         context.restore();
 
