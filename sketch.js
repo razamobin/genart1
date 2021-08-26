@@ -20,21 +20,21 @@ const sketch = () => {
 
   const createGrid = () => {
     const points = [];
-    const count = 80;
+    // TODO: this can be some random ness in the num of points
+    const count = 70;
     for (let x = 0; x < count; x++) {
         for (let y = 0; y < count; y++) {
             const u = count <= 1? 0.5 : x / (count - 1);
             const v = count <= 1? 0.5 : y / (count - 1);
 
             // better to use u and v for this, because they are between 0 and 1
-            const freq = 10;
-            //const radius = Math.abs(random.noise2D(freq*u, freq*v))*.1;
             const radius = Math.abs(random.noise2D(50*u, 50*v))*.2;
 
             points.push({
                 color: random.pick(palette),
                 radius: radius,//Math.abs(0.01 +  random.gaussian()*.01),
-                rotation: random.noise2D(1.1*u, 1.1*v),
+                // TODO: this can be some random ness in the multiplier
+                rotation: random.noise2D(1.5*u, 1.5*v),
                 position: [u,v]
             });
         }
@@ -78,14 +78,16 @@ const sketch = () => {
         */
 
         context.save();
-        context.fillStyle = color + 'aa';
+        context.fillStyle = color + 'bb';//'aa';
         context.translate(x,y);
         fsize = Math.round(radius*width*1.2);
         context.font = `${fsize}px "serif"`;
+        // TODO: could be some randomness on rotation angle
         context.rotate(Math.PI*1/4 + rotation);
         //context.fillText("`", 0, 0);
         //context.fillText(".", 0, 0);
         //context.fillText("!", 0, 0);
+        // TODO: could be some randomness in which character, or also doing multiple chars
         context.fillText("'", 0, 0);
         //context.beginPath();
         //context.rect(100,100,0,0);
